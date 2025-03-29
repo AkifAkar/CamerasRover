@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live MJPEG Stream</title>
+</head>
+<body>
+    <h1>From PC</h1>
+    <select onchange="postFunction()" name="resolution" id="resolution">
+        <option value="1080">1080p</option>
+        <option value="720">720p</option>
+        <option value="480">480p</option>
+    </select>
+
+    <img src="{{ mjpeg_url }}" width="100%" height="auto" id="mjpeg-stream" />
+
+    <script>
+        const mjpegStream = document.getElementById("mjpeg-stream");
+        const resolution = document.getElementById("resolution");
+        
+        // Function to refresh the image
+        function refreshImage() {
+            mjpegStream.src = "{{ mjpeg_url }}";
+        }
+        function postFunction(){
+            fetch('https://10.42.1.212/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Make sure the server expects JSON
+            },
+            body: JSON.stringify({ value: resolution.value }), // Wrap the integer in an object
+            })
+            .then(response => response.json()) // If the server returns JSON
+            .then(data => console.log('Success:', data))
+            .catch((error) => console.error('Error:', error));
+        }
+        
+        // Refresh every 500 milliseconds (adjust as needed)
+        //setInterval(refreshImage, 500);
+    </script>
+</body>
+</html>

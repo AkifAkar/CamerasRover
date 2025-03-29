@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rover Cameras</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            height: 100vh;
+            gap: 5px;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            padding: 0;
+            overflow: hidden;
+        }
+        img {
+            width: 80%;
+            height: auto;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            margin-right: 5px;
+        }
+        button {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        select {
+            padding: 5px;
+        }
+        @media (max-width: 800px) {
+            body {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+                height: auto;
+            }
+            .container {
+                flex-direction: column;
+            }
+            img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="controls">
+            <button id="saveButton1">Photo</button>
+            <select id="select1">
+                <option>1080p</option>
+                <option>720p</option>
+                <option>480p</option>
+            </select>
+        </div>
+        <img src="{{ video1_url }}/video_feed" alt="Image 1" id="video1" crossorigin="anonymous">
+    </div>
+
+    <div class="container">
+        <div class="controls">
+            <button id="saveButton2">Photo</button>
+            <select id="select2">
+                <option>1080p</option>
+                <option>720p</option>
+                <option>480p</option>
+            </select>
+        </div>
+        <img src="{{ video2_url }}/stream.mjpg" alt="Image 2" id="video2" crossorigin="anonymous">
+    </div>
+
+    <div class="container">
+        <div class="controls">
+            <button id="saveButton3">Photo</button>
+            <select id="select3">
+                <option>1080p</option>
+                <option>720p</option>
+                <option>480p</option>
+            </select>
+        </div>
+        <img src="{{ video3_url }}/stream.mjpg" alt="Image 3" id="video3" crossorigin="anonymous">
+    </div>
+
+    <div class="container">
+        <div class="controls">
+            <button id="saveButton4">Photo</button>
+            <select id="select4">
+                <option>1080p</option>
+                <option>720p</option>
+                <option>480p</option>
+            </select>
+        </div>
+        <img src="{{ video4_url }}/video_feed" alt="Image 4" id="video4" crossorigin="anonymous">
+    </div>
+
+    <script>
+        document.getElementById('saveButton1').addEventListener('click', function() {
+            var image = document.getElementById('video1');
+            var imageUrl = image.src; // Get the image source URL
+            
+            fetch('/save-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image_url: imageUrl }) // Send image URL to backend
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Image saved successfully!');
+                } else {
+                    alert('Failed to save image!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('saveButton2').addEventListener('click', function() {
+            var image = document.getElementById('video2');
+            var imageUrl = image.src; // Get the image source URL
+            
+            fetch('/save-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image_url: imageUrl }) // Send image URL to backend
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Image saved successfully!');
+                } else {
+                    alert('Failed to save image!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('saveButton3').addEventListener('click', function() {
+            var image = document.getElementById('video3');
+            var imageUrl = image.src; // Get the image source URL
+            
+            fetch('/save-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image_url: imageUrl }) // Send image URL to backend
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Image saved successfully!');
+                } else {
+                    alert('Failed to save image!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('saveButton4').addEventListener('click', function() {
+            var image = document.getElementById('video4');
+            var imageUrl = image.src; // Get the image source URL
+            
+            fetch('/save-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image_url: imageUrl }) // Send image URL to backend
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Image saved successfully!');
+                } else {
+                    alert('Failed to save image!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+
+
+
+        function start(){
+            document.getElementById("select1").addEventListener("change", addActivityItem1, false);
+            document.getElementById("select2").addEventListener("change", addActivityItem2, false);
+            document.getElementById("select3").addEventListener("change", addActivityItem3, false);
+            document.getElementById("select4").addEventListener("change", addActivityItem4, false);
+        }
+
+        function addActivityItem1(){
+            var value1 = document.getElementById("select1").value
+            fetch('{{ video1_url }}/change_resolution', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ resolution: value1 }) // Send image URL to backend
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Resolution changed successfully!');
+                } else {
+                    alert('Failed to change resolution!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function addActivityItem2(){
+            var value1 = document.getElementById("select2").value
+            fetch('{{ video2_url }}/change_resolution', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ resolution: value1 }) // Send image URL to backend
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Resolution changed successfully!');
+                } else {
+                    alert('Failed to change resolution!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function addActivityItem3(){
+            var value1 = document.getElementById("select3").value
+            fetch('{{ video3_url }}/change_resolution', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ resolution: value1 }) // Send image URL to backend
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Resolution changed successfully!');
+                } else {
+                    alert('Failed to change resolution!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function addActivityItem4(){
+            var value1 = document.getElementById("select4").value
+            fetch('{{ video4_url }}/change_resolution', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ resolution: value1 }) // Send image URL to backend
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Resolution changed successfully!');
+                } else {
+                    alert('Failed to change resolution!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        window.addEventListener("load", start, false);
+    </script>
+
+</body>
+</html>
